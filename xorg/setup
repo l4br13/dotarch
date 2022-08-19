@@ -1,0 +1,21 @@
+#!/bin/sh
+
+if [ $(id -u) != "0" ]; then
+	echo "permission denied. aborting"
+	exit
+fi
+
+printf "install: xorg config "
+
+dir=$(dirname $(realpath "$0"))
+
+if [ ! -d /etc/X11/xorg.conf.d ]; then
+	printf "(failed).\n"
+	printf "! xorg: xorg.conf.d is not exists.\n"
+	printf "! install xorg first.\n"
+	exit
+fi
+
+cp -r $dir/config/* /etc/X11/xorg.conf.d/
+
+printf "(done)\n"

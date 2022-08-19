@@ -1,0 +1,23 @@
+#!/bin/sh
+id="$(id -u)"
+if [ "$id" != "0" ]; then
+	echo "aborting. (root) permission denied."
+	exit
+fi
+printf "tty1 : autologin enable \n\n"
+dir=$(dirname $(realpath "$0"))
+getty_dir="/etc/systemd/system/getty@tty1.service.d"
+if [ ! -d "$getty_dir" ]; then
+    sudo mkdir "$getty_dir"
+fi
+autologin=$(cat "$dir/config/autologin.conf")
+skip_prompt=$(cat "$dir/config/skip-prompt.conf")
+printf "! who will autologin on tty1\n\n"
+read -p "username: " username
+term='$TERM'
+noclear="--noclear"
+echo "$autologin $username - $term" > "$getty_dir/autologin.conf"
+echo "$skip_prompt $username $noclear %I $term" > "$getty_dir/skip-prompt.conf"
+printf "autologin (enabled) \n\n"
+printf "! your system will automaticaly login on tty1 with user ($username).\n\n"
+touch /home/$username/.hushlogin

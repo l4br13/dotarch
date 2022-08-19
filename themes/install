@@ -1,0 +1,14 @@
+#!/bin/sh
+
+printf "install: themes "
+
+if [ ! -e ~/.themes ]; then
+	mkdir ~/.themes
+fi
+
+dir=$(dirname $0)
+
+tar -xf $dir/vimix.tar.xz -C ~/.themes
+tar -xf $dir/vimix-light.tar.xz -C ~/.themes
+
+printf "(done)\n";

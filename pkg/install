@@ -1,0 +1,21 @@
+#!/bin/sh
+if [ $(id -u) != "0" ]; then
+    echo "Permission denied."
+    exit
+fi
+dir=$(dirname $(realpath "$0"))
+
+
+if [ -f "/bin/pacman" ]; then
+	update="pacman -Sy"
+	pm="pacman"
+	arg="-S"
+    pkg=$(cat $dir/package.ini)
+fi
+
+install="$pm $arg $pkg_global $pkg"
+
+if [ $pm != "" ]; then
+	$update
+	$install
+fi

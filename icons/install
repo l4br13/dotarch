@@ -1,0 +1,14 @@
+#!/bin/sh
+
+printf "install: icons "
+
+if [ ! -e ~/.icons ]; then
+	mkdir ~/.icons
+fi
+
+dir=$(dirname $0)
+
+tar -xf $dir/Vimix-Black.tar.xz -C ~/.icons
+tar -xf $dir/Vimix.tar.xz -C ~/.icons
+
+printf "(done)\n"

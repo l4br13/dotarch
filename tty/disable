@@ -1,0 +1,12 @@
+#!/bin/sh
+
+if [ "$(id -u)" != 0 ]; then
+	exit;
+fi
+dir=$(dirname $(realpath "$0"))
+getty_dir=/etc/systemd/system/getty@tty1.service.d
+if [ ! -d "$getty_dir" ]; then
+    sudo mkdir "$getty_dir"
+fi
+mv $getty_dir/autologin.conf $getty_dir/.autologin.conf
+mv $getty_dir/skip-prompt.conf $getty_dir/.skip-prompt.conf

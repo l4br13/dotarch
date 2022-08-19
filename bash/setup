@@ -1,0 +1,8 @@
+#!/bin/sh
+dir=$(dirname "$0")
+profile=$(cat $dir/profile.sh)
+check=$(cat ~/.bash_profile | grep "# startx")
+if [ ! "$check" == "# startx" ]; then
+	echo "$profile" >> ~/.bash_profile
+	printf ".bash_profile patched, now startx will run on tty1.\n"
+fi

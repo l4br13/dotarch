@@ -1,0 +1,11 @@
+#!/bin/sh
+id="$(id -u)"
+if [ "$id" != "0" ]; then
+	echo "aborting. (root) permission denied."
+	exit
+fi
+dir=$(dirname $(realpath "$0"))
+if [ -f /bin/pacman ]; then
+	pacman -U $dir/pkg/*.tar.zst
+fi
+./install

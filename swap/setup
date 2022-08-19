@@ -1,0 +1,19 @@
+#!/bin/sh
+if [ $(id -u) != "0" ]; then
+	echo "aborting. (root) permission denied."
+	exit
+fi
+dir=$(dirname $(realpath $0))
+ram_total=$(free -m | grep Mem: | awk '{print $2}')
+if [ ! -f /swap ]; then
+	fallocate -l "${ram_total}M" /swap
+	mkswap /swap
+	chmod 600 /swap
+	echo "/swap	none	swap	defaults	0	0" >> /etc/fstab
+	printf "/etc/fstab >> added (swap)"
+	printf "swap created on /swap : size ${ram_total}M\n"
+	printf "swapon /swap : "
+	swapon /swap
+	printf "[done] \n"
+fi
+
