@@ -1,6 +1,6 @@
 #!/bin/sh
 if [ $(id -u) != "0" ]; then
-    echo "Permission denied."
+    echo "Permission denied, Aborting."
     exit
 fi
 grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=grub
