@@ -13,9 +13,7 @@ if [ "$confirm" != "y" ]; then
 	exit 1
 fi
 
-printf "here we go...!"
-
-exit
+printf "here we go...!\n"
 
 parted -s /dev/sda -- mklabel gpt
 parted -a optimal /dev/sda -- mkpart fat32 0% 512M
@@ -29,6 +27,8 @@ mkfs.ext4 /dev/sda2
 
 mount /dev/sda2 /mnt
 mount /dev/sda1 /mnt/boot --mkdir
+
+pacstrap /mnt base linux linux-firmware efibootmgr grub nano
 
 genfstab -U /mnt > /mnt/etc/fstab
 
