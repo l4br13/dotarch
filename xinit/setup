@@ -1,0 +1,6 @@
+#!/bin/sh
+dir=$(dirname "$0")
+profile=$(cat $dir/profile.sh)
+check=$(cat ~/.bash_profile | grep "# startx")
+if [ ! -f $dir/rc ]; then exit; fi
+cp $dir/rc ~/.xinitrc
